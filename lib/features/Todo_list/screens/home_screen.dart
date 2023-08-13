@@ -107,8 +107,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           motion: const DrawerMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context) =>
-                                  {todoProvider.removeTodo(myIndex)},
+                              onPressed: (context) {
+                                todoProvider.removeTodo(myIndex);
+                                final snackBar = SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: const Text('Todo deleted'),
+                                  action: SnackBarAction(
+                                    label: 'Undo',
+                                    textColor: Colors.white,
+                                    onPressed: () {},
+                                  ),
+                                );
+
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
                               backgroundColor: Color(0xFFFE4A49),
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
@@ -168,11 +181,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ]),
                             ),
                             trailing: IconButton(
-                              icon: const Icon(
-                                Icons.delete,
-                              ),
-                              onPressed: () => todoProvider.removeTodo(myIndex),
-                            ),
+                                icon: const Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  todoProvider.removeTodo(myIndex);
+                                  final snackBar = SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: const Text('Todo deleted'),
+                                    action: SnackBarAction(
+                                      label: 'Undo',
+                                      textColor: Colors.white,
+                                      onPressed: () {},
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                }),
                             leading: Theme(
                               data: Theme.of(context).copyWith(
                                 unselectedWidgetColor: Colors.black,

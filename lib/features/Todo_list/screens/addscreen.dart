@@ -45,6 +45,17 @@ class _AddScreenState extends State<AddScreen> {
           );
           todoProvider.addTodo(todo);
           Navigator.pop(context);
+          final snackBar = SnackBar(
+            backgroundColor: Colors.red,
+            content: const Text('Todo added'),
+            action: SnackBarAction(
+              label: 'Undo',
+              textColor: Colors.white,
+              onPressed: () {},
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (title.isEmpty || description.isEmpty) {
           final snackBar = SnackBar(
             backgroundColor: Colors.red,
@@ -64,6 +75,18 @@ class _AddScreenState extends State<AddScreen> {
         if (title.isNotEmpty && description.isNotEmpty) {
           final todo = Todo(title: title, description: description);
           todoProvider.updateTodo(myindex!, todo);
+
+          final snackBar = SnackBar(
+            backgroundColor: Colors.red,
+            content: const Text('Todo updated'),
+            action: SnackBarAction(
+              label: 'Undo',
+              textColor: Colors.white,
+              onPressed: () {},
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
           Navigator.pop(context);
         }
       }
