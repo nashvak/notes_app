@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:provider/provider.dart';
 
 import '../models/todo_models.dart';
@@ -47,7 +47,7 @@ class _AddScreenState extends State<AddScreen> {
           todoProvider.addTodo(todo);
           Navigator.pop(context);
           final snackBar = SnackBar(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.grey,
             content: const Text('Todo added'),
             action: SnackBarAction(
               label: 'Undo',
@@ -59,7 +59,7 @@ class _AddScreenState extends State<AddScreen> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (title.isEmpty || description.isEmpty) {
           final snackBar = SnackBar(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.grey,
             content: const Text('Please fill out'),
             action: SnackBarAction(
               label: 'Undo',
@@ -78,7 +78,7 @@ class _AddScreenState extends State<AddScreen> {
           todoProvider.updateTodo(myindex!, todo);
 
           final snackBar = SnackBar(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.grey,
             content: const Text('Todo updated'),
             action: SnackBarAction(
               label: 'Undo',
@@ -133,7 +133,7 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                     child: Icon(
                       Icons.save,
-                      //  color: style.color,
+                      color: style.color,
                     ),
                   ),
                 ),

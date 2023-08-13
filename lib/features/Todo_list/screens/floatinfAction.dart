@@ -1,5 +1,44 @@
 import 'package:flutter/material.dart';
 
+import 'addscreen.dart';
+
+class FloatingActionBtn extends StatelessWidget {
+  const FloatingActionBtn({
+    super.key,
+    required this.icons,
+  });
+
+  final TextStyle? icons;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      width: 50,
+      child: FloatingActionButton(
+        elevation: 0,
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddScreen()));
+        },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.0),
+          ),
+        ),
+        child: Icon(
+          Icons.add,
+          size: 30,
+          color: icons!.color,
+        ),
+      ),
+    );
+  }
+}
+
+//
+
 class SearchBar extends StatelessWidget {
   const SearchBar({
     super.key,
@@ -12,8 +51,6 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? style = Theme.of(context).textTheme.titleSmall;
-    TextStyle? cursor = Theme.of(context).textTheme.titleMedium;
     return TextField(
       //controller: search,
       cursorColor: cursor!.color,

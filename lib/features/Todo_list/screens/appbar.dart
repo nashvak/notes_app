@@ -8,6 +8,7 @@ class FirstAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('fafaf');
     var themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
