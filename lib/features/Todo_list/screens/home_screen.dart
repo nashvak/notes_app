@@ -29,18 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     print('build');
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    TextStyle? style = Theme.of(context).textTheme.titleSmall;
+    TextStyle? cursor = Theme.of(context).textTheme.titleMedium;
+    TextStyle? icons = Theme.of(context).textTheme.titleLarge;
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 50, 16, 0),
         child: Column(
           children: [
-            FirstAppbar(),
+            const FirstAppbar(),
             height20,
             TextField(
-              /*controller: search,
-      //cursorColor: cursor!.color,
-      onChanged: (val) {
+              //controller: search,
+              cursorColor: cursor!.color,
+              /*onChanged: (val) {
         provider.onSearchTextChanged(val);
       },*/
               style: Theme.of(context)
@@ -53,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 hintStyle: Theme.of(context).textTheme.titleSmall,
                 prefixIcon: Icon(
                   Icons.search,
-                  //color: style!.color,
+                  color: style!.color,
                 ),
                 fillColor: Theme.of(context).colorScheme.primary,
                 filled: true,
@@ -76,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(
                     child: Text(
                       "No todo",
-                      // style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   );
                 } else {
@@ -162,43 +165,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                             title: RichText(
-                              maxLines: 2,
+                              maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               text: TextSpan(
                                   text: '${tasks[index].title}\n',
-                                  //style: Theme.of(context).textTheme.bodyMedium,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                   children: [
                                     TextSpan(
                                       text: tasks[index].description,
-                                      /* style: Theme.of(context)
+                                      style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!
                                           .copyWith(
                                             fontWeight: FontWeight.normal,
                                             fontSize: 14,
-                                          ),*/
+                                          ),
                                     )
                                   ]),
                             ),
-                            trailing: IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                ),
-                                onPressed: () {
-                                  todoProvider.removeTodo(myIndex);
-                                  final snackBar = SnackBar(
-                                    backgroundColor: Colors.red,
-                                    content: const Text('Todo deleted'),
-                                    action: SnackBarAction(
-                                      label: 'Undo',
-                                      textColor: Colors.white,
-                                      onPressed: () {},
-                                    ),
-                                  );
-
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }),
                             leading: Theme(
                               data: Theme.of(context).copyWith(
                                 unselectedWidgetColor: Colors.black,
@@ -238,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(
             Icons.add,
             size: 30,
-            //color: style!.color,
+            color: icons!.color,
           ),
         ),
       ),

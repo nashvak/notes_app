@@ -31,6 +31,7 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     int? myindex = widget.index;
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    TextStyle? style = Theme.of(context).textTheme.titleLarge;
 
     //
     void saveButton(BuildContext context) {
@@ -93,8 +94,6 @@ class _AddScreenState extends State<AddScreen> {
     }
 
     return Scaffold(
-      //backgroundColor: Colors.grey.shade900,
-
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
         child: Column(
@@ -116,7 +115,7 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                     child: Icon(
                       Icons.arrow_back_ios_new,
-                      //  color: style!.color,
+                      color: style!.color,
                     ),
                   ),
                 ),
@@ -145,7 +144,7 @@ class _AddScreenState extends State<AddScreen> {
               children: [
                 TextFormField(
                   controller: titleController,
-                  //cursorColor: style!.color,
+                  cursorColor: style.color,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
@@ -161,7 +160,7 @@ class _AddScreenState extends State<AddScreen> {
                 ),
                 TextFormField(
                   controller: contentController,
-                  //cursorColor: style.color,
+                  cursorColor: style.color,
                   style: Theme.of(context).textTheme.titleMedium,
                   maxLines: null,
                   decoration: InputDecoration(
