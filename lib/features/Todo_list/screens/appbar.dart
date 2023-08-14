@@ -8,7 +8,7 @@ class FirstAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('fafaf');
+    //print('fafaf');
     var themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -20,7 +20,7 @@ class FirstAppbar extends StatelessWidget {
         ),
         Switch.adaptive(
           value: themeProvider.isDarkTheme,
-          activeColor: Color(0xFFCCE5FF),
+          activeColor: const Color(0xFFCCE5FF),
           onChanged: (val) {
             themeProvider.toggleTheme();
           },

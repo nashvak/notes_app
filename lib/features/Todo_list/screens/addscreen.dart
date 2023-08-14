@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
 
@@ -45,9 +46,9 @@ class _AddScreenState extends State<AddScreen> {
             isCompleted: false,
           );
           todoProvider.addTodo(todo);
-          Navigator.pop(context);
+          //Navigator.pop(context);
+          context.go('/');
           final snackBar = SnackBar(
-            backgroundColor: Colors.grey,
             content: const Text('Todo added'),
             action: SnackBarAction(
               label: 'Undo',
@@ -88,7 +89,8 @@ class _AddScreenState extends State<AddScreen> {
           );
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          Navigator.pop(context);
+          //Navigator.pop(context);
+          context.go('/');
         }
       }
     }
@@ -103,7 +105,8 @@ class _AddScreenState extends State<AddScreen> {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    context.go('/');
                   },
                   padding: const EdgeInsets.all(0),
                   icon: Container(

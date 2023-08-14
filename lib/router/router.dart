@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:notes_app/features/Todo_list/screens/bottomNavigation/bottomNav.dart';
 import 'package:notes_app/features/Todo_list/screens/home_screen.dart';
 
 import '../features/Todo_list/models/todo_models.dart';
@@ -10,8 +11,14 @@ class MyAppConfig {
     initialLocation: '/',
     routes: [
       GoRoute(
-        name: 'addscreen',
-        path: '/addscreen/:id',
+        path: '/',
+        builder: (context, state) {
+          return const BottomNav();
+        },
+      ),
+      GoRoute(
+        name: 'add',
+        path: '/add/:id',
         pageBuilder: (context, state) {
           Todo? todo = state.extra as Todo?;
 
@@ -26,13 +33,8 @@ class MyAppConfig {
         },
       ),
       GoRoute(
-        path: '/',
-        builder: (context, state) {
-          return const HomeScreen();
-        },
-      ),
-      GoRoute(
-        path: '/add',
+        name: 'addscreen',
+        path: '/addscreen',
         builder: (context, state) {
           return const AddScreen();
         },
