@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/features/Todo_list/screens/archive.dart';
-import 'package:notes_app/features/Todo_list/screens/home_screen.dart';
+import 'package:notes_app/features/Archive_section/archive.dart';
+import 'package:notes_app/features/Todo_list/screens/Homescreen/home_screen.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});

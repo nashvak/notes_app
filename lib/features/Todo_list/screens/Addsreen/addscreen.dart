@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
 
-import '../models/todo_models.dart';
-import '../provider/todo_provider.dart';
+import '../../models/todo_models.dart';
+import '../../provider/todo_provider.dart';
 
 class AddScreen extends StatefulWidget {
   final Todo? todo;
@@ -49,7 +49,12 @@ class _AddScreenState extends State<AddScreen> {
           //Navigator.pop(context);
           context.go('/');
           final snackBar = SnackBar(
-            content: const Text('Todo added'),
+            content: const Text(
+              'Todo added',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: const Color.fromARGB(255, 34, 34, 34),
+            duration: Duration(seconds: 1),
             action: SnackBarAction(
               label: 'Undo',
               textColor: Colors.white,
@@ -60,8 +65,10 @@ class _AddScreenState extends State<AddScreen> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (title.isEmpty || description.isEmpty) {
           final snackBar = SnackBar(
-            backgroundColor: Colors.grey,
-            content: const Text('Please fill out'),
+            backgroundColor: const Color.fromARGB(255, 34, 34, 34),
+            duration: Duration(seconds: 1),
+            content: const Text('Please fill out',
+                style: TextStyle(color: Colors.white)),
             action: SnackBarAction(
               label: 'Undo',
               textColor: Colors.white,
@@ -79,8 +86,10 @@ class _AddScreenState extends State<AddScreen> {
           todoProvider.updateTodo(myindex!, todo);
 
           final snackBar = SnackBar(
-            backgroundColor: Colors.grey,
-            content: const Text('Todo updated'),
+            backgroundColor: const Color.fromARGB(255, 34, 34, 34),
+            duration: Duration(seconds: 1),
+            content: const Text('Todo updated',
+                style: TextStyle(color: Colors.white)),
             action: SnackBarAction(
               label: 'Undo',
               textColor: Colors.white,

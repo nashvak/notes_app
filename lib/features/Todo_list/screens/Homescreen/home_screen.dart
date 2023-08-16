@@ -5,14 +5,15 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:notes_app/features/Archive_section/archive_provider.dart';
 //import 'package:notes_app/features/Todo_list/screens/addscreen.dart';
-import 'package:notes_app/features/Todo_list/screens/appbar.dart';
-import 'package:notes_app/features/Todo_list/screens/floatinfAction.dart';
+import 'package:notes_app/features/Todo_list/screens/Homescreen/appbar.dart';
+import 'package:notes_app/features/Todo_list/screens/Homescreen/floatinfAction.dart';
 import 'package:provider/provider.dart';
 
-import '../../../widgets/constants.dart';
-import '../models/todo_models.dart';
-import '../provider/todo_provider.dart';
+import '../../../../widgets/constants.dart';
+import '../../models/todo_models.dart';
+import '../../provider/todo_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,15 +23,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  getRandomColors() {
-    Random random = Random();
-    return backgroundColors[random.nextInt(backgroundColors.length)];
-  }
-
   @override
   Widget build(BuildContext context) {
     //print('build');
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    final archive = Provider.of<ArchiveProvider>(context, listen: false);
     TextStyle? style = Theme.of(context).textTheme.titleSmall;
     TextStyle? cursor = Theme.of(context).textTheme.titleMedium;
     TextStyle? icons = Theme.of(context).textTheme.titleLarge;
@@ -63,22 +60,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         int myIndex = index;
                         final todo = tasks[index];
                         return Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.symmetric(vertical: 6),
                           child: Slidable(
-                            key: const ValueKey(0),
+                            key: UniqueKey(),
                             startActionPane: ActionPane(
                                 dismissible: DismissiblePane(
-                                  onDismissed: () {},
+                                  // key: UniqueKey(),
+                                  onDismissed: () {
+                                    todoProvider.removeTodo(myIndex);
+                                    archive.addToarchive(tasks[myIndex]);
+                                  },
                                 ),
                                 motion: const ScrollMotion(),
                                 children: [
                                   SlidableAction(
-                                    onPressed: (context) => {},
+                                    onPressed: (context) {
+                                      todoProvider.removeTodo(myIndex);
+                                      archive.addToarchive(tasks[myIndex]);
+                                    },
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10.0)),
                                     backgroundColor: Colors.orange.shade300,
                                     foregroundColor: Colors.white,
-                                    icon: Icons.favorite_border,
+
+                                    icon: Icons.archive,
                                     //label: 'Delete',
                                   ),
                                 ]),
@@ -92,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     todoProvider.removeTodo(myIndex);
                                     final snackBar = SnackBar(
                                       backgroundColor: Colors.black,
-                                      content: const Text('Todo deleted'),
+                                      content: const Text('Todo deleted',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      duration: Duration(seconds: 1),
                                       action: SnackBarAction(
                                         label: 'Undo',
                                         textColor: Colors.white,
@@ -126,63 +134,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   backgroundColor: const Color(0xFF21B7CA),
                                   foregroundColor: Colors.white,
+
                                   icon: Icons.edit,
                                   //label: 'Edit',
                                 ),
                               ],
                             ),
-                            child: Card(
-                              color: getRandomColors(),
-                              elevation: 3,
-                              child: ListTile(
-                                onTap: () {
-                                  /* Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AddScreen(
-                                        index: myIndex,
-                                        todo: tasks[myIndex],
-                                      ),
-                                    ),
-                                  );
-                                  */
-                                  context.go('/add/$myIndex',
-                                      extra: tasks[myIndex]);
-                                },
-                                title: RichText(
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  text: TextSpan(
-                                      text: '${tasks[index].title}\n',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      children: [
-                                        TextSpan(
-                                          text: tasks[index].description,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                              ),
-                                        )
-                                      ]),
-                                ),
-                                leading: Theme(
-                                  data: Theme.of(context).copyWith(
-                                    unselectedWidgetColor: Colors.black,
-                                  ),
-                                  child: Checkbox(
-                                    activeColor: Colors.black,
-                                    value: todo.isCompleted,
-                                    onChanged: (_) =>
-                                        todoProvider.toggleTodoStatus(myIndex),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: TodoCards(
+                                myIndex: myIndex,
+                                tasks: tasks,
+                                todo: todo,
+                                todoProvider: todoProvider),
                           ),
                         );
                       },
@@ -195,6 +157,75 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionBtn(icons: icons),
+    );
+  }
+}
+
+class TodoCards extends StatelessWidget {
+  const TodoCards({
+    super.key,
+    required this.myIndex,
+    required this.tasks,
+    required this.todo,
+    required this.todoProvider,
+  });
+
+  final int myIndex;
+  final List<Todo> tasks;
+  final Todo todo;
+  final TodoProvider todoProvider;
+  getRandomColors() {
+    Random random = Random();
+    return backgroundColors[random.nextInt(backgroundColors.length)];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: getRandomColors(),
+      elevation: 3,
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        onTap: () {
+          /* Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddScreen(
+                index: myIndex,
+                todo: tasks[myIndex],
+              ),
+            ),
+          );
+          */
+          context.go('/add/$myIndex', extra: tasks[myIndex]);
+        },
+        title: RichText(
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          text: TextSpan(
+              text: '${tasks[myIndex].title}\n',
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: [
+                TextSpan(
+                  text: tasks[myIndex].description,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14,
+                      ),
+                )
+              ]),
+        ),
+        leading: Theme(
+          data: Theme.of(context).copyWith(
+            unselectedWidgetColor: Colors.black,
+          ),
+          child: Checkbox(
+            activeColor: Colors.black,
+            value: todo.isCompleted,
+            onChanged: (_) => todoProvider.toggleTodoStatus(myIndex),
+          ),
+        ),
+      ),
     );
   }
 }

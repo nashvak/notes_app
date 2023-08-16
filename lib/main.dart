@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:notes_app/features/Archive_section/archive_provider.dart';
 import 'package:notes_app/features/Themes/theme_provider.dart';
 import 'package:notes_app/features/Todo_list/provider/todo_provider.dart';
 
@@ -21,6 +22,7 @@ void main() async {
 
   Hive.registerAdapter<Todo>(TodoAdapter());
   await Hive.openBox<Todo>('todos');
+  await Hive.openBox<Todo>('archive');
   runApp(const MyApp());
 }
 
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => TodoProvider()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => ArchiveProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
