@@ -33,127 +33,124 @@ class _HomeScreenState extends State<HomeScreen> {
     TextStyle? icons = Theme.of(context).textTheme.titleLarge;
 
     return Scaffold(
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 50, 16, 0),
-          child: Column(
-            children: [
-              const FirstAppbar(),
-              height20,
-              SearchBar(cursor: cursor, style: style),
-              Expanded(
-                  child: ValueListenableBuilder<Box<Todo>>(
-                valueListenable: todoProvider.todoBox.listenable(),
-                builder: (context, box, child) {
-                  final tasks = todoProvider.todos;
-                  if (box.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No todo",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        int myIndex = index;
-                        final todo = tasks[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Slidable(
-                            key: UniqueKey(),
-                            startActionPane: ActionPane(
-                                dismissible: DismissiblePane(
-                                  // key: UniqueKey(),
-                                  onDismissed: () {
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 50, 16, 0),
+        child: Column(
+          children: [
+            const FirstAppbar(),
+            height20,
+            SearchBar(cursor: cursor, style: style),
+            Expanded(
+                child: ValueListenableBuilder<Box<Todo>>(
+              valueListenable: todoProvider.todoBox.listenable(),
+              builder: (context, box, child) {
+                final tasks = todoProvider.todos;
+                if (box.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No todo",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      int myIndex = index;
+                      final todo = tasks[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Slidable(
+                          key: UniqueKey(),
+                          startActionPane: ActionPane(
+                              dismissible: DismissiblePane(
+                                // key: UniqueKey(),
+                                onDismissed: () {
+                                  todoProvider.removeTodo(myIndex);
+                                  archive.addToarchive(tasks[myIndex]);
+                                },
+                              ),
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
                                     todoProvider.removeTodo(myIndex);
                                     archive.addToarchive(tasks[myIndex]);
                                   },
-                                ),
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (context) {
-                                      todoProvider.removeTodo(myIndex);
-                                      archive.addToarchive(tasks[myIndex]);
-                                    },
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    backgroundColor: Colors.orange.shade300,
-                                    foregroundColor: Colors.white,
-
-                                    icon: Icons.archive,
-                                    //label: 'Delete',
-                                  ),
-                                ]),
-                            endActionPane: ActionPane(
-                              motion: const DrawerMotion(),
-                              children: [
-                                SlidableAction(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(10.0)),
-                                  onPressed: (context) {
-                                    todoProvider.removeTodo(myIndex);
-                                    final snackBar = SnackBar(
-                                      backgroundColor: Colors.black,
-                                      content: const Text('Todo deleted',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      duration: Duration(seconds: 1),
-                                      action: SnackBarAction(
-                                        label: 'Undo',
-                                        textColor: Colors.white,
-                                        onPressed: () {},
-                                      ),
-                                    );
-
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  },
-                                  backgroundColor: const Color(0xFFFE4A49),
+                                  backgroundColor: Colors.orange.shade300,
                                   foregroundColor: Colors.white,
-                                  icon: Icons.delete,
+
+                                  icon: Icons.archive,
                                   //label: 'Delete',
                                 ),
-                                SlidableAction(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                  onPressed: (context) {
-                                    /* Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddScreen(
-                                          index: myIndex,
-                                          todo: tasks[myIndex],
-                                        ),
-                                      ),
-                                    );*/
-                                    context.go('/add/$myIndex',
-                                        extra: tasks[myIndex]);
-                                  },
-                                  backgroundColor: const Color(0xFF21B7CA),
-                                  foregroundColor: Colors.white,
+                              ]),
+                          endActionPane: ActionPane(
+                            motion: const DrawerMotion(),
+                            children: [
+                              SlidableAction(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                onPressed: (context) {
+                                  todoProvider.removeTodo(myIndex);
+                                  final snackBar = SnackBar(
+                                    backgroundColor: Colors.black,
+                                    content: const Text('Todo deleted',
+                                        style: TextStyle(color: Colors.white)),
+                                    duration: const Duration(seconds: 1),
+                                    action: SnackBarAction(
+                                      label: 'Undo',
+                                      textColor: Colors.white,
+                                      onPressed: () {},
+                                    ),
+                                  );
 
-                                  icon: Icons.edit,
-                                  //label: 'Edit',
-                                ),
-                              ],
-                            ),
-                            child: TodoCards(
-                                myIndex: myIndex,
-                                tasks: tasks,
-                                todo: todo,
-                                todoProvider: todoProvider),
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                },
+                                backgroundColor: const Color(0xFFFE4A49),
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete,
+                                //label: 'Delete',
+                              ),
+                              SlidableAction(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                onPressed: (context) {
+                                  /* Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddScreen(
+                                        index: myIndex,
+                                        todo: tasks[myIndex],
+                                      ),
+                                    ),
+                                  );*/
+                                  context.go('/add/$myIndex',
+                                      extra: tasks[myIndex]);
+                                },
+                                backgroundColor: const Color(0xFF21B7CA),
+                                foregroundColor: Colors.white,
+
+                                icon: Icons.edit,
+                                //label: 'Edit',
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ))
-            ],
-          ),
+                          child: TodoCards(
+                              myIndex: myIndex,
+                              tasks: tasks,
+                              todo: todo,
+                              todoProvider: todoProvider),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+            ))
+          ],
         ),
       ),
       floatingActionButton: FloatingActionBtn(icons: icons),
@@ -185,7 +182,7 @@ class TodoCards extends StatelessWidget {
       color: getRandomColors(),
       elevation: 3,
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         onTap: () {
           /* Navigator.push(
             context,

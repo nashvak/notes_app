@@ -8,8 +8,8 @@ class TodoProvider extends ChangeNotifier {
 
   List<Todo> get todos => todoBox.values.toList();
 
-  void addTodo(Todo todo) {
-    todoBox.add(todo);
+  void addTodo(Todo todo) async {
+    await todoBox.add(todo);
     notifyListeners();
   }
 
@@ -26,7 +26,7 @@ class TodoProvider extends ChangeNotifier {
   }
 
   void updateTodo(int index, Todo todo) {
-    todoBox.putAt(index, todo);
+    todoBox.putAt(index, todo); //use save method
     notifyListeners();
   }
 }

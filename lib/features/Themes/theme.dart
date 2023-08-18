@@ -30,6 +30,7 @@ ThemeData darkTheme = ThemeData(
     //container
     colorScheme: ColorScheme.dark(
       primary: Appcolors.containerDark,
+      //secondary: const Color(0xFFE5E5E5),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.grey.shade800.withOpacity(.8),
@@ -67,9 +68,10 @@ ThemeData lightTheme = ThemeData(
   //container
   colorScheme: ColorScheme.light(
     primary: Appcolors.containerLight,
+    // secondary: const Color(0xFFFFD6D6),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color.fromARGB(255, 255, 253, 253),
       selectedItemColor: Colors.blue,
-      unselectedItemColor: const Color.fromARGB(255, 38, 38, 38)),
+      unselectedItemColor: Color.fromARGB(255, 38, 38, 38)),
 );

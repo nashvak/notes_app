@@ -47,14 +47,14 @@ class _AddScreenState extends State<AddScreen> {
           );
           todoProvider.addTodo(todo);
           //Navigator.pop(context);
-          context.go('/');
+          context.go('/home');
           final snackBar = SnackBar(
             content: const Text(
               'Todo added',
               style: TextStyle(color: Colors.white),
             ),
             backgroundColor: const Color.fromARGB(255, 34, 34, 34),
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             action: SnackBarAction(
               label: 'Undo',
               textColor: Colors.white,
@@ -66,7 +66,7 @@ class _AddScreenState extends State<AddScreen> {
         } else if (title.isEmpty || description.isEmpty) {
           final snackBar = SnackBar(
             backgroundColor: const Color.fromARGB(255, 34, 34, 34),
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             content: const Text('Please fill out',
                 style: TextStyle(color: Colors.white)),
             action: SnackBarAction(
@@ -87,7 +87,7 @@ class _AddScreenState extends State<AddScreen> {
 
           final snackBar = SnackBar(
             backgroundColor: const Color.fromARGB(255, 34, 34, 34),
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             content: const Text('Todo updated',
                 style: TextStyle(color: Colors.white)),
             action: SnackBarAction(
@@ -99,7 +99,7 @@ class _AddScreenState extends State<AddScreen> {
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           //Navigator.pop(context);
-          context.go('/');
+          context.go('/home');
         }
       }
     }
@@ -115,7 +115,7 @@ class _AddScreenState extends State<AddScreen> {
                 IconButton(
                   onPressed: () {
                     // Navigator.pop(context);
-                    context.go('/');
+                    context.go('/home');
                   },
                   padding: const EdgeInsets.all(0),
                   icon: Container(

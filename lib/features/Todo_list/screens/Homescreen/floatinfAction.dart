@@ -22,6 +22,7 @@ class FloatingActionBtn extends StatelessWidget {
           /*Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AddScreen()));*/
           context.pushNamed('addscreen');
+          //context.go('/add/4', extra: null);
         },
         backgroundColor: Theme.of(context).colorScheme.primary,
         shape: const RoundedRectangleBorder(

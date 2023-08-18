@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget height20 = const SizedBox(
+const height20 = SizedBox(
   height: 20,
 );
 
