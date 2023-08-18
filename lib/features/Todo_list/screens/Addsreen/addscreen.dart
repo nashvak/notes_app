@@ -18,6 +18,23 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+  void snackbar(String message) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: const TextStyle(color: Colors.white),
+      ),
+      backgroundColor: const Color.fromARGB(255, 34, 34, 34),
+      duration: const Duration(seconds: 1),
+      action: SnackBarAction(
+        label: 'Cancel',
+        textColor: Colors.white,
+        onPressed: () {},
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   void initState() {
@@ -46,37 +63,11 @@ class _AddScreenState extends State<AddScreen> {
             isCompleted: false,
           );
           todoProvider.addTodo(todo);
-          //Navigator.pop(context);
+
           context.go('/home');
-          final snackBar = SnackBar(
-            content: const Text(
-              'Todo added',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: const Color.fromARGB(255, 34, 34, 34),
-            duration: const Duration(seconds: 1),
-            action: SnackBarAction(
-              label: 'Undo',
-              textColor: Colors.white,
-              onPressed: () {},
-            ),
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          snackbar('Todo added');
         } else if (title.isEmpty || description.isEmpty) {
-          final snackBar = SnackBar(
-            backgroundColor: const Color.fromARGB(255, 34, 34, 34),
-            duration: const Duration(seconds: 1),
-            content: const Text('Please fill out',
-                style: TextStyle(color: Colors.white)),
-            action: SnackBarAction(
-              label: 'Undo',
-              textColor: Colors.white,
-              onPressed: () {},
-            ),
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          snackbar('Please fill all');
         }
       } else {
         final title = titleController.text;
@@ -85,19 +76,7 @@ class _AddScreenState extends State<AddScreen> {
           final todo = Todo(title: title, description: description);
           todoProvider.updateTodo(myindex!, todo);
 
-          final snackBar = SnackBar(
-            backgroundColor: const Color.fromARGB(255, 34, 34, 34),
-            duration: const Duration(seconds: 1),
-            content: const Text('Todo updated',
-                style: TextStyle(color: Colors.white)),
-            action: SnackBarAction(
-              label: 'Undo',
-              textColor: Colors.white,
-              onPressed: () {},
-            ),
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          snackbar('Todo updated');
           //Navigator.pop(context);
           context.go('/home');
         }
