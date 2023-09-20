@@ -21,11 +21,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigation() {
-    _timer = Timer(const Duration(seconds: 3), () {
+    _timer = Timer(const Duration(seconds: 2), () {
       if (mounted) {
         // Check if the widget is still in the tree
-        // Navigator.pushReplacementNamed(context, 'bottom');
-        Navigator.push(
+
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => BottomNav()));
       }
     });
