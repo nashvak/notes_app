@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:lottie/lottie.dart';
+import 'package:notes_app/features/Todo_list/screens/bottomNavigation/bottom_nav.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,12 +13,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
   @override
   void initState() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      context.go('/home');
-    });
+    navigation();
     super.initState();
+  }
+
+  void navigation() {
+    _timer = Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        // Check if the widget is still in the tree
+        // Navigator.pushReplacementNamed(context, 'bottom');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => BottomNav()));
+      }
+    });
   }
 
   @override
@@ -32,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
+    _timer?.cancel(); // Cancel the timer if it's still active
     super.dispose();
   }
 }

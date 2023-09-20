@@ -24,27 +24,30 @@ class _BottomNavState extends State<BottomNav> {
         children: list,
       ),
       bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
-            setState(() {
+        onTap: (index) {
+          setState(
+            () {
               myIndex = index;
-            });
-          },
-          currentIndex: myIndex,
-          type: BottomNavigationBarType.fixed,
-          selectedFontSize: 14,
-          unselectedFontSize: 13, // label text
-          iconSize: 20,
-          elevation: 50,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.archive),
-              label: 'Archive',
-            ),
-          ]),
+            },
+          );
+        },
+        currentIndex: myIndex,
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 14,
+        unselectedFontSize: 13, // label text
+        iconSize: 20,
+        elevation: 50,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.archive),
+            label: 'Archive',
+          ),
+        ],
+      ),
     );
   }
 }

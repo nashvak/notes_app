@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import '../Addsreen/addscreen.dart';
 
 //import 'addscreen.dart';
 
@@ -19,10 +20,8 @@ class FloatingActionBtn extends StatelessWidget {
       child: FloatingActionButton(
         elevation: 0,
         onPressed: () {
-          /*Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddScreen()));*/
-          context.pushNamed('addscreen');
-          //context.go('/add/4', extra: null);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddScreen()));
         },
         backgroundColor: Theme.of(context).colorScheme.primary,
         shape: const RoundedRectangleBorder(

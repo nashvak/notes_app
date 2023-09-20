@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import 'package:notes_app/features/Todo_list/screens/Addsreen/addscreen.dart';
 
 import '../../../../widgets/constants.dart';
 import '../../models/todo_models.dart';
@@ -33,7 +34,7 @@ class TodoCards extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         onTap: () {
-          /* Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AddScreen(
@@ -42,8 +43,6 @@ class TodoCards extends StatelessWidget {
               ),
             ),
           );
-          */
-          context.go('/add/$myIndex', extra: tasks[myIndex]);
         },
         title: RichText(
           maxLines: 3,

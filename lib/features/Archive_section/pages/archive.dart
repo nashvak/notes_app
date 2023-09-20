@@ -4,21 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:notes_app/features/Archive_section/provider/archive_provider.dart';
 import 'package:notes_app/features/Todo_list/provider/todo_provider.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../widgets/constants.dart';
-import '../Todo_list/models/todo_models.dart';
+import '../../../widgets/constants.dart';
+import '../../Todo_list/models/todo_models.dart';
+import '../provider/archive_provider.dart';
 
 class ArchiveScreen extends StatelessWidget {
   const ArchiveScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final archive = Provider.of<ArchiveProvider>(context);
-    final todoProvider = Provider.of<TodoProvider>(context);
+    print("Archive section");
+    final archive = Provider.of<ArchiveProvider>(context, listen: false);
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 50, 16, 0),
@@ -111,17 +112,19 @@ class Listview extends StatelessWidget {
               color: const Color(0xFFE5E5E5),
               elevation: 3,
               child: ListTile(
-                // onTap: () {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => AddScreen(
-                //         index: index,
-                //         todo: tasks[index],
-                //       ),
-                //     ),
-                //   );
-                // },
+                onTap: () {
+                  /* Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddScreen(
+                            index: myIndex,
+                            todo: tasks[myIndex],
+                          ),
+                        ),
+                      );
+                      */
+                  // context.go('/add/$index', extra: tasks[index]);
+                },
                 title: RichText(
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
 
@@ -53,9 +52,9 @@ class _AddScreenState extends State<AddScreen> {
 
     //
     void saveButton(BuildContext context) {
+      final title = titleController.text;
+      final description = contentController.text;
       if (widget.todo == null && widget.index == null) {
-        final title = titleController.text;
-        final description = contentController.text;
         if (title.isNotEmpty && description.isNotEmpty) {
           final todo = Todo(
             title: title,
@@ -64,21 +63,18 @@ class _AddScreenState extends State<AddScreen> {
           );
           todoProvider.addTodo(todo);
 
-          context.go('/home');
+          Navigator.pop(context);
           snackbar('Todo added');
         } else if (title.isEmpty || description.isEmpty) {
           snackbar('Please fill all');
         }
       } else {
-        final title = titleController.text;
-        final description = contentController.text;
         if (title.isNotEmpty && description.isNotEmpty) {
           final todo = Todo(title: title, description: description);
           todoProvider.updateTodo(myindex!, todo);
 
           snackbar('Todo updated');
-          //Navigator.pop(context);
-          context.go('/home');
+          Navigator.pop(context);
         }
       }
     }
@@ -93,8 +89,8 @@ class _AddScreenState extends State<AddScreen> {
               children: [
                 IconButton(
                   onPressed: () {
-                    // Navigator.pop(context);
-                    context.go('/home');
+                    Navigator.pop(context);
+                    //context.go('/home');
                   },
                   padding: const EdgeInsets.all(0),
                   icon: Container(

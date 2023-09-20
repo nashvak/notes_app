@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../Todo_list/models/todo_models.dart';
+import '../../Todo_list/models/todo_models.dart';
 
 class ArchiveProvider extends ChangeNotifier {
   Box<Todo> archiveBox = Hive.box<Todo>('archive');

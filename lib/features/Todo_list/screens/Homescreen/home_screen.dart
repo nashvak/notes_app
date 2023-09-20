@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:hive_flutter/adapters.dart';
-import 'package:notes_app/features/Archive_section/archive_provider.dart';
-//import 'package:notes_app/features/Todo_list/screens/addscreen.dart';
+
+import 'package:notes_app/features/Todo_list/screens/Addsreen/addscreen.dart';
+
 import 'package:notes_app/features/Todo_list/screens/Homescreen/appbar.dart';
-import 'package:notes_app/features/Todo_list/screens/Homescreen/floatinfAction.dart';
+import 'package:notes_app/features/Todo_list/screens/Homescreen/floating_action.dart';
 import 'package:notes_app/features/Todo_list/screens/Homescreen/searchbar.dart';
 import 'package:notes_app/features/Todo_list/screens/Homescreen/todo_cards.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../widgets/constants.dart';
+import '../../../Archive_section/provider/archive_provider.dart';
 import '../../models/todo_models.dart';
 import '../../provider/todo_provider.dart';
 
@@ -125,8 +126,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(10.0)),
                                 onPressed: (context) {
-                                  context.go('/add/$myIndex',
-                                      extra: tasks[myIndex]);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddScreen(
+                                        index: myIndex,
+                                        todo: tasks[myIndex],
+                                      ),
+                                    ),
+                                  );
                                 },
                                 backgroundColor: const Color(0xFF21B7CA),
                                 foregroundColor: Colors.white,
